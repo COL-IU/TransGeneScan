@@ -127,6 +127,8 @@ if (length($seq)>0){ #added by YY, Aug, 2013
     if (exists $s{$head}){
 	print OUT ">".$head."\n";
 	call_post(\$seq, \*OUT, \*FAA, \*FFN, $head, \$s{$head},\@lines, \@lines1, \%faahash, \%ffnhash);
+    }else{
+      print REM ">".$head."\n";
     }
 }
 
