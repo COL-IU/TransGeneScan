@@ -1,0 +1,100 @@
+TransGeneScan
+=============
+TransGeneScan is a gene finding tool for Metatranscriptomic sequences. TransGeneScan incorporates strand-specic hidden states, representing coding sequences in sense and anti-sense strands on transcripts in a Hidden Markov Model similar to the one used in FragGeneScan (http://fraggenescan.sourceforge.net/), and can predict a sense transcript containing one or multiple genes (in an operon) or an antisense transcript.
+
+Installation
+=============
+To install TransGeneScan, please follow the steps below:
+
+1. Untar the downloaded file "TransGeneScan.tar.gz". This will automatically generate the directory "TransGeneScan".
+	tar -xvf TransGeneScan.tar.gz
+
+2. Make sure that you also have a C compiler such as "gcc" and "perl" and "python" interpreter.
+
+3. Run "makefile" to compile and build excutable
+	make tgs
+
+
+Running the program
+====================
+1.  To run TransGeneScan, 
+
+./run_TransGeneScan.pl -in=[seq_file_name] -out=[output_file_name] (-thread=[number of thread; default 1])
+
+[seq_file_name]:		sequence file name including the full path
+[output_file_name]:	output file name including the full path
+[num_thread]:				number of thread used in TransGeneScan (optional parameter). Default 1.
+
+
+Assembly of Transcripts
+=======================
+1. To assemble transcripts based on read mappings onto a single reference genome,
+
+./scripts/pipeline.sh [reference_file] [reads_prefix] [TGSHome] [n] [k] [t]
+
+[reference_file]: reference sequence file including full path
+[reads_prefix]: paired-end reads prefix (not including _1.fastq, _2.fastq) including full path. The suffixes, _1.fastq and _2.fastq, are added within the script. Please make sure the files are named appropriately. 
+[TGSHome]: Full path of TransGeneScan home directory
+[n],[k],[t]: These are bwa parameters (please see bwa documentation for more information). The values used for testing were 4,4,4
+
+Source files included
+=====================
+1. run_hmm.c, util_lib.c, util_lib.h, hmm.h, hmm_lib.c
+These files contain the main Hidden Markov Model (HMM) framework of the prediction system. Most of the code is re-used from FragGeneScan as is. 
+
+2. run_TransGeneScan.pl
+This script is the main front end for the user to call the program for prediction. (See "Running the program" above)
+
+3. post_process.pl
+This script is part of the original FragGeneScan which makes corrections in the position of start codon based on a prediction model (See reference for more details). This code is re-used as is, in TransGeneScan.
+
+4. FGS_gff.py
+This script converts the TransGeneScan output format (which is the same as FragGeneScan output format) into gff format. 
+
+5. processFragOut.py
+This script is used to output predictions on sense transcripts and antisense transcripts as separate files.
+
+6. train/*
+These files include the training parameters used by the HMM. 
+
+7. scripts/*
+These scripts are used to do the assembly of transcripts based on read mappings (See "Assembly of Transcripts" above). 
+
+Sample files included
+=====================
+1. example/transcripts.fasta
+This file is the transcript assembly output produced by running scripts/pipeline.sh using paired-end reads downloaded from Short Reads Archive (SRR442380) mapped on to E.coli (NC_000913) as reference.
+
+2. example/TGSout.out, TGSout.ffn, TGSout.faa, TGSout.gff
+Prediction output from TransGeneScan in TGS output format (see below), nucleic acid fasta format, amino acid fasta format and gff format.
+
+3. example/TGSout.sn
+Prediction output from TransGeneScan containing only sense transcripts in TGS output format. 
+
+4. example/TGSout.as
+Prediction output from TransGeneScan containing only antisense transcripts. Since each entire transcript is an antisense transcript, no start/stop ranges are specified. The nucleotide sequence (same as input) is also output for these transcripts. 
+
+5. example/TGSout.rem
+List of headers from the input (transcripts.fasta), for which no predictions can be made. 
+
+TGS output format
+=================
+This format lists the coordinates of putative genes. This file consists of five columns (start position, end position, strand, frame, score).  For example,
+
+>ftranscript:1741:5049
+217     1059    +       1       1.297925
+1061    1993    +       2       1.310458
+1994    3280    +       2       1.289984
+>ftranscript:6551:6792
+1       242     -       3       1.304437
+
+
+Reference
+=========
+1. Ismail, W.M., Ye, Y., Tang, H.: Gene finding in metatranscriptomic sequences. BMC Bioinformatics 15(Suppl 9):S8 (2014)
+2. Rho, M., Tang, H., Ye, Y.: Fraggenescan: predicting genes in short and error-prone reads. Nucleic acids research 38(20), 191-191 (2010)
+
+License
+============
+Copyright (C) 2013 Wazim Mohammed Ismail, Yuzhen Ye and Haixu Tang.
+You may redistribute this software under the terms of the GNU General Public License.
