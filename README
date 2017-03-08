@@ -1,13 +1,13 @@
 TransGeneScan
 =============
-TransGeneScan is a gene finding tool for Metatranscriptomic sequences. TransGeneScan incorporates strand-specic hidden states, representing coding sequences in sense and anti-sense strands on transcripts in a Hidden Markov Model similar to the one used in FragGeneScan (http://fraggenescan.sourceforge.net/), and can predict a sense transcript containing one or multiple genes (in an operon) or an antisense transcript.
+TransGeneScan is a gene finding tool for Metatranscriptomic sequences. TransGeneScan incorporates strand-specic hidden states, representing coding sequences in sense and anti-sense strands on transcripts in a Hidden Markov Model similar to the one used in FragGeneScan (https://github.com/COL-IU/FragGeneScan), and can predict a sense transcript containing one or multiple genes (in an operon) or an antisense transcript.
 
 Installation
 =============
 To install TransGeneScan, please follow the steps below:
 
-1. Untar the downloaded file "TransGeneScan.tar.gz". This will automatically generate the directory "TransGeneScan".
-	tar -xvf TransGeneScan.tar.gz
+1. Clone this repository:
+	git clone https://github.com/COL-IU/TransGeneScan.git
 
 2. Make sure that you also have a C compiler such as "gcc" and "perl" and "python" interpreter.
 
