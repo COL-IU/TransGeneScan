@@ -77,6 +77,13 @@ Prediction output from TransGeneScan containing only antisense transcripts. Sinc
 5. example/TGSout.rem
 List of headers from the input (transcripts.fasta), for which no predictions can be made. 
 
+Number of assembled transcripts: 5999 (transcripts.fasta)
+Number of sense transcripts: 1246 (TGSout.sn)
+Number of antisense transcripts: 2086 (TGSout.as)
+Number of remaining transcripts: 2667 (TGSout.rem)
+Number of sense genes: 2491 (TGSout.sn, TGSout.ffn, TGSout.faa) [NOTE: This is reported as 2159 in the paper. This discrepancy is a result of some bug fixes.]
+Number of elements reported in GFF format (sense genes + antisense transcripts): 2491 + 2086 = 4577 (TGSout.gff)
+
 TGS output format
 =================
 This format lists the coordinates of putative genes. This file consists of five columns (start position, end position, strand, frame, score).  For example,
